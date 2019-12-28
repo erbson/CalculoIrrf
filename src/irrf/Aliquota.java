@@ -1,7 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+Segue o link do site da Receita com as faixas das das aliquotas de IR vigente.
+http://receita.economia.gov.br/acesso-rapido/tributos/irpf-imposto-de-renda-pessoa-fisica
+
+
+
  */
 package irrf;
 
@@ -19,33 +21,23 @@ public class Aliquota {
     double deducao;
     double irrf;
     Inss inss = new Inss();
-    
-    
-    
-    
-     
-    public double Salarioliquido(double salario,double pensao,int qtdependente){
-        
-        
-         if (qtdependente >= 1 || pensao>0) {
 
-         return   salarioliquido = salario - (qtdependente * dependente) - inss.CalculaInss(salario) - pensao;
-        
-         }else
-           return salarioliquido = salario - inss.CalculaInss(salario);
-             
-        
+    public double Salarioliquido(double salario, double pensao, int qtdependente) {
+
+        if (qtdependente >= 1 || pensao > 0) {
+
+            return salarioliquido = salario - (qtdependente * dependente) - inss.CalculaInss(salario) - pensao;
+
+        } else {
+            return salarioliquido = salario - inss.CalculaInss(salario);
+        }
+
     }
-    
-    
-    
 
-    public double AliquotaIrrf(double salario,double pensao,int qtdependente) {
-     
-        
-   salarioliquido =   this.Salarioliquido( salario, pensao,qtdependente);
-        
-        
+    public double AliquotaIrrf(double salario, double pensao, int qtdependente) {
+
+        salarioliquido = this.Salarioliquido(salario, pensao, qtdependente);
+
         if (salarioliquido < faixa01[0]) {
 
             return aliquota = 0;
@@ -99,30 +91,21 @@ public class Aliquota {
 
     }
 
-    
-   
-    
-    
-    
-    
-   
-
-    public double CalculaIRRF(double salario,double pensao,int qtdependente) {
+    public double CalculaIRRF(double salario, double pensao, int qtdependente) {
         if (qtdependente >= 1) {
 
             irrf = salario - (qtdependente * dependente) - inss.CalculaInss(salario) - pensao;
 
-           irrf *= this.AliquotaIrrf(salario,pensao,qtdependente) / 100;
-          return irrf -= this.Deducao(this.AliquotaIrrf(salario,pensao,qtdependente));
+            irrf *= this.AliquotaIrrf(salario, pensao, qtdependente) / 100;
+            return irrf -= this.Deducao(this.AliquotaIrrf(salario, pensao, qtdependente));
         } else {
 
             irrf = salario - inss.CalculaInss(salario);
-           irrf *= this.AliquotaIrrf(salario,pensao,qtdependente) / 100;
-            return irrf -= this.Deducao(this.AliquotaIrrf(salario,pensao,qtdependente));
+            irrf *= this.AliquotaIrrf(salario, pensao, qtdependente) / 100;
+            return irrf -= this.Deducao(this.AliquotaIrrf(salario, pensao, qtdependente));
 
         }
-        
+
     }
-    
 
 }
