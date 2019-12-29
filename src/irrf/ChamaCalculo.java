@@ -16,6 +16,7 @@ public class ChamaCalculo {
     double valorDependente;
     double salario;
     double salarioliquido;
+    double salarioantesdoirrf;
 
     double pensao;
 
@@ -35,11 +36,14 @@ public class ChamaCalculo {
         salario = 5000.00;
         dependente = 5;
         pensao = 100;
-
+        // esse metodo salarioliquido é na verdade o metodo que calcula as deduçoes 
+        //para se chegar na base de IRRF não é o liquido que o funcionario ira receber.
         irrf.Salarioliquido(salario, pensao, dependente);
         DecimalFormat converte = new DecimalFormat("#.00");
 
-        salarioliquido = irrf.Salarioliquido(salario, pensao, dependente) - irrf.CalculaIRRF(salario, pensao, dependente);
+        // essa variavel salarioliquido é o valor total que o funcionario ira receber, ela receber o resultado do calculo :
+        // salarioliquido = salario - pensao alimenticia  -irrf - inss.
+        salarioliquido = salario - inss.CalculaInss(salario) - pensao - irrf.CalculaIRRF(salario, pensao, dependente);
 
         System.out.println("-----------------------------------HOLERITE-------------------------------------\n");
         System.out.println("|EMPRESA:: SOFTWARE CODE SA \n");
